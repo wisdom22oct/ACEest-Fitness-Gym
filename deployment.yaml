@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aceestapp-deployment
+  labels:
+    app: aceestapp
+spec:
+  replicas: 2   # number of pods
+  selector:
+    matchLabels:
+      app: aceestapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: aceestapp
+    spec:
+      containers:
+      - name: aceestapp-container
+        image: yourdockerhub/aceestapp:1.0   # replace with your Docker Hub repo
+        ports:
+        - containerPort: 5000
+        env:
+        - name: HEADLESS
+          value: "1"   # ensures GUI is skipped in Kubernetes

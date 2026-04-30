@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -77,6 +78,9 @@ class ACEestApp:
         self.diet_label.config(text=data["diet"])
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = ACEestApp(root)
-    root.mainloop()
+    if os.environ.get("HEADLESS") == "1":
+        print("Running in headless mode, skipping GUI")
+    else:
+        root = tk.Tk()
+        app = ACEestApp(root)
+        root.mainloop()
